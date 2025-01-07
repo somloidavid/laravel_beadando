@@ -1,0 +1,72 @@
+-- database: ./database.sqlite
+
+CREATE TABLE Toppings (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name VARCHAR(50) NOT NULL
+);
+
+INSERT INTO Toppings (name) VALUES
+('Tomato Sauce'),
+('Mozzarella'),
+('Pepperoni'),
+('Mushrooms'),
+('Onions'),
+('Green Peppers'),
+('Ham'),
+('Pineapple'),
+('Sausage'),
+('Bacon'),
+('BBQ Sauce'),
+('Chicken'),
+('Red Onions'),
+('Cilantro'),
+('Basil');
+
+CREATE TABLE Pizzas (
+    id INTEGER PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    price DECIMAL(5, 2) NOT NULL,
+    image VARCHAR(255) NOT NULL
+);
+
+INSERT INTO Pizzas (id, name, price, image) VALUES
+(1, 'Margherita', 8.99, 'https://www.donpepe.hu/storage/products/big/mapi_1.jpg'),
+(2, 'Pepperoni', 9.99, 'https://www.donpepe.hu/storage/products/big/szalpi_1.jpg'),
+(3, 'Vegetarian', 10.99, 'https://www.donpepe.hu/storage/products/big/gftpi_2.jpg'),
+(4, 'Hawaiian', 11.99, 'https://www.donpepe.hu/storage/products/big/hawpi_1.jpg'),
+(5, 'Meat Lovers', 12.99, 'https://www.donpepe.hu/storage/products/big/huhpi_1.jpg'),
+(6, 'BBQ Chicken', 13.99, 'https://www.donpepe.hu/storage/products/big/rapi_1.jpg');
+
+CREATE TABLE PizzaToppings (
+    pizza_id INTEGER,
+    topping_id INTEGER,
+    FOREIGN KEY (pizza_id) REFERENCES Pizzas(id),
+    FOREIGN KEY (topping_id) REFERENCES Toppings(id)
+);
+
+INSERT INTO PizzaToppings (pizza_id, topping_id) VALUES
+(1, (SELECT id FROM Toppings WHERE name = 'Tomato Sauce')),
+(1, (SELECT id FROM Toppings WHERE name = 'Mozzarella')),
+(1, (SELECT id FROM Toppings WHERE name = 'Basil')),
+(2, (SELECT id FROM Toppings WHERE name = 'Tomato Sauce')),
+(2, (SELECT id FROM Toppings WHERE name = 'Mozzarella')),
+(2, (SELECT id FROM Toppings WHERE name = 'Pepperoni')),
+(3, (SELECT id FROM Toppings WHERE name = 'Tomato Sauce')),
+(3, (SELECT id FROM Toppings WHERE name = 'Mozzarella')),
+(3, (SELECT id FROM Toppings WHERE name = 'Mushrooms')),
+(3, (SELECT id FROM Toppings WHERE name = 'Onions')),
+(3, (SELECT id FROM Toppings WHERE name = 'Green Peppers')),
+(4, (SELECT id FROM Toppings WHERE name = 'Tomato Sauce')),
+(4, (SELECT id FROM Toppings WHERE name = 'Mozzarella')),
+(4, (SELECT id FROM Toppings WHERE name = 'Ham')),
+(4, (SELECT id FROM Toppings WHERE name = 'Pineapple')),
+(5, (SELECT id FROM Toppings WHERE name = 'Tomato Sauce')),
+(5, (SELECT id FROM Toppings WHERE name = 'Mozzarella')),
+(5, (SELECT id FROM Toppings WHERE name = 'Pepperoni')),
+(5, (SELECT id FROM Toppings WHERE name = 'Sausage')),
+(5, (SELECT id FROM Toppings WHERE name = 'Bacon')),
+(6, (SELECT id FROM Toppings WHERE name = 'BBQ Sauce')),
+(6, (SELECT id FROM Toppings WHERE name = 'Mozzarella')),
+(6, (SELECT id FROM Toppings WHERE name = 'Chicken')),
+(6, (SELECT id FROM Toppings WHERE name = 'Red Onions')),
+(6, (SELECT id FROM Toppings WHERE name = 'Cilantro'));
